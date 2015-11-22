@@ -1,0 +1,5 @@
+package uno;
+
+public enum CardType {
+	ZERO, ONE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, DRAW_TWO, SKIP, WILD, WILD_DRAW_FOUR, REVERSE
+}
