@@ -27,59 +27,6 @@ public class Player {
 	 */
 	public Card playerTurn(Card card) {
 		return playerHand.playCard(card);
-//		Card returnCard = null;
-//		boolean finished = false;
-//		// Attempt to play a normal colored card
-//		for (int x = 0; x < hand.size(); x++) {
-//			if ((hand.get(x).color() == card.color() || hand.get(x).type() == card
-//					.type())
-//					&& hand.get(x).type() != CardType.WILD
-//					&& hand.get(x).type() != CardType.WILD_DRAW_FOUR) {
-//				returnCard = hand.get(x);
-//				hand.remove(x);
-//				break;
-//			}
-//		}
-//
-//		// Attempt to play a uncolored card
-//		if (finished == false) {
-//			for (int x = 0; x < hand.size(); x++) {
-//				if (finished == false
-//						&& (hand.get(x).type() == 13 || hand.get(x).CardNumber == 14)) {
-//					ReturnCard = hand.get(x);
-//					hand.remove(x);
-//					finished = true;
-//					ReturnCard.CardColor = bestColor();
-//					// System.out.println("Played "+x+". And chose "+ReturnCard.CardColor);
-//				}
-//			}
-//		}
-//
-//		// Draw until you can play
-//		while (finished == false) {
-//			Card randCard = Card.getNewCard();
-//			// System.out.println("Drew a card. Got a "+test.printCard(randCard)+".");
-//			if (randCard.color() == card.color()
-//					|| randCard.color() == card.color()) {
-//				returnCard = randCard;
-//				finished++;
-//			} else if (randCard.CardNumber == 13 || randCard.CardNumber == 14) {
-//				ReturnCard = randCard;
-//				// System.out.println("Played it.");
-//				ReturnCard.CardColor = bestColor();
-//				finished++;
-//			} else {
-//				hand.add(randCard);
-//				// System.out.print("Added it to hand");
-//				// try {
-//				// System.in.read();
-//				// } catch (IOException e) {
-//				//
-//				// e.printStackTrace();
-//				// }
-//			}
-//		}
-//		return returnCard;
 	}
 
 	public ArrayList<Card> hand() {
@@ -100,26 +47,36 @@ public class Player {
 				playable = getPlayableCards(card);
 			}
 			
-			//Play best color cards
-			
-			
-			
-			return null;
+			// Attempt to play a normal colored card
+			for(Card play : playable) {
+				if(play.color() == card.color()) {
+					cards.remove(play);
+					return play;
+				}
+			}
+	
+			// Attempt to play a uncolored card
+			for (Card play : playable) {
+				if (play.type() == CardType.WILD || play.type() == CardType.WILD_DRAW_FOUR) {
+					cards.remove(play);
+					return play;
+				}	
+			}
+	
+			// Draw until you can play
+			while (true) {
+				Card randCard = Card.getNewCard();
+				if (randCard.color() == card.color() || randCard.type() == CardType.WILD || randCard.type() == CardType.WILD_DRAW_FOUR) {
+					return randCard;
+				} else {
+					cards.add(randCard);
+				}
+			}
 		}
 		
 		public void drawCard(){
 			cards.add(Card.getNewCard());
 		}
-
-//		private Card matchingColor(CardColor color) {
-//			Card cardToPlay = null;
-//			for (Card c : cards) {
-//				if (c.color() == color) {
-//
-//				}
-//			}
-//			return cardToPlay;
-//		}
 		
 		/**
 		 * Gets the cards that can be played in the hand
